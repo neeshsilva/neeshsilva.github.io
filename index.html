@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neeshad Silva — Senior Full-Stack Software Engineer</title>
+<meta name="description" content="Neeshad Silva — Senior Full-Stack Software Engineer specializing in React, Next.js, Node.js, GraphQL, VTEX e-commerce and AWS cloud infrastructure." />
+<style>
+  :root{
+    --bg:#0a0b0f;
+    --bg-alt:#0f1117;
+    --surface:#14161d;
+    --surface-2:#1a1d26;
+    --border:#242733;
+    --text:#eef0f4;
+    --text-dim:#9aa0ae;
+    --text-faint:#666c7a;
+    --accent:#6ee7b7;
+    --accent-2:#7dd3fc;
+    --accent-warm:#fbbf7d;
+    --radius:14px;
+    --maxw:1100px;
+    --shadow: 0 20px 60px -20px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(700px circle at 15% 0%, rgba(110,231,183,.08), transparent 55%),
+      radial-gradient(700px circle at 85% 15%, rgba(125,211,252,.07), transparent 55%);
+    pointer-events:none; z-index:0;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1}
+  section{padding:110px 0}
+  @media (max-width:720px){ section{padding:72px 0} }
+
+  /* NAV */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(10,11,15,.72);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{max-width:var(--maxw); margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between}
+  .brand{font-weight:700; letter-spacing:.02em; font-size:16px}
+  .brand span{color:var(--accent)}
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--text-dim)}
+  .navlinks a{transition:color .2s}
+  .navlinks a:hover{color:var(--text)}
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent); color:#08110d; font-weight:600; font-size:13px;
+    padding:9px 16px; border-radius:999px; transition:transform .15s, box-shadow .15s;
+  }
+  .nav-cta:hover{transform:translateY(-1px); box-shadow:0 8px 24px -8px rgba(110,231,183,.5)}
+  .navtoggle{display:none; background:none; border:1px solid var(--border); color:var(--text); border-radius:8px; padding:8px 10px; font-size:18px}
+  @media (max-width:760px){
+    .navlinks{display:none}
+    .navtoggle{display:block}
+  }
+
+  /* HERO */
+  .hero{padding-top:170px; padding-bottom:100px}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); background:rgba(110,231,183,.08); border:1px solid rgba(110,231,183,.25);
+    padding:7px 14px; border-radius:999px; margin-bottom:26px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent); box-shadow:0 0 12px var(--accent)}
+  h1.hero-title{
+    font-size:clamp(34px, 6vw, 62px); font-weight:800; letter-spacing:-.02em; line-height:1.06;
+    max-width:820px;
+  }
+  h1.hero-title .grad{
+    background:linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{
+    margin-top:22px; font-size:19px; color:var(--text-dim); max-width:640px;
+  }
+  .hero-actions{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600;
+    padding:13px 22px; border-radius:10px; transition:transform .15s, box-shadow .15s, background .15s, border-color .15s;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--accent); color:#08110d}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 30px -10px rgba(110,231,183,.55)}
+  .btn-ghost{border-color:var(--border); color:var(--text); background:var(--surface)}
+  .btn-ghost:hover{border-color:#3a3f4d; background:var(--surface-2); transform:translateY(-2px)}
+  .hero-meta{
+    margin-top:56px; display:flex; flex-wrap:wrap; gap:34px; color:var(--text-faint); font-size:13.5px;
+  }
+  .hero-meta div{display:flex; align-items:center; gap:8px}
+  .hero-stats{
+    margin-top:64px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
+    max-width:820px;
+  }
+  .stat{background:var(--surface); padding:22px 20px}
+  .stat .num{font-size:26px; font-weight:800; color:var(--accent)}
+  .stat .label{font-size:12.5px; color:var(--text-dim); margin-top:4px}
+  @media (max-width:640px){ .hero-stats{grid-template-columns:repeat(2,1fr)} }
+
+  /* SECTION HEADERS */
+  .sec-head{margin-bottom:48px}
+  .sec-kicker{font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:12px}
+  .sec-title{font-size:clamp(26px,4vw,38px); font-weight:800; letter-spacing:-.01em}
+  .sec-desc{color:var(--text-dim); margin-top:12px; max-width:620px; font-size:15.5px}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:56px; align-items:start}
+  @media (max-width:820px){ .about-grid{grid-template-columns:1fr} }
+  .about-text p{color:var(--text-dim); font-size:16px; margin-bottom:16px}
+  .about-text strong{color:var(--text); font-weight:600}
+  .about-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px}
+  .about-card h4{font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); margin-bottom:16px}
+  .about-list{list-style:none}
+  .about-list li{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:14.5px}
+  .about-list li:last-child{border-bottom:none}
+  .about-list span:first-child{color:var(--text-dim)}
+  .about-list span:last-child{font-weight:600}
+
+  /* EXPERIENCE */
+  .timeline{position:relative; padding-left:34px}
+  .timeline::before{content:""; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:linear-gradient(var(--accent), var(--border) 60%)}
+  .tl-item{position:relative; margin-bottom:56px}
+  .tl-item:last-child{margin-bottom:0}
+  .tl-dot{position:absolute; left:-34px; top:4px; width:14px; height:14px; border-radius:50%; background:var(--bg); border:2px solid var(--accent)}
+  .tl-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; justify-content:space-between}
+  .tl-role{font-size:20px; font-weight:700}
+  .tl-role .co{color:var(--accent)}
+  .tl-date{font-size:13px; color:var(--text-faint); white-space:nowrap; font-variant-numeric:tabular-nums}
+  .tl-loc{color:var(--text-dim); font-size:13.5px; margin-top:3px}
+  .tl-summary{color:var(--text-dim); margin-top:14px; font-size:15px}
+  .proj-block{margin-top:22px; padding:18px 20px; background:var(--surface); border:1px solid var(--border); border-radius:12px}
+  .proj-block + .proj-block{margin-top:12px}
+  .proj-block h5{font-size:14.5px; font-weight:700; margin-bottom:8px; color:var(--text)}
+  .proj-block h5 small{display:block; font-weight:400; color:var(--text-faint); font-size:12px; margin-top:2px}
+  .proj-block ul{margin-left:18px; color:var(--text-dim); font-size:14px}
+  .proj-block li{margin-bottom:6px}
+  .tags{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px}
+  .tag{font-size:11.5px; padding:4px 10px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); color:var(--text-dim)}
+  .note{font-size:12.5px; color:var(--text-faint); margin-top:14px; font-style:italic}
+
+  /* SKILLS */
+  .skills-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  @media (max-width:820px){ .skills-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:560px){ .skills-grid{grid-template-columns:1fr} }
+  .skill-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; transition:transform .2s, border-color .2s}
+  .skill-card:hover{transform:translateY(-4px); border-color:#333849}
+  .skill-card h4{font-size:14px; margin-bottom:14px; color:var(--accent-2); display:flex; align-items:center; gap:8px}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{font-size:12.5px; padding:6px 12px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text)}
+
+  /* PROJECTS */
+  .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+  @media (max-width:900px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .projects-grid{grid-template-columns:1fr} }
+  .pcard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px; display:flex; flex-direction:column; transition:transform .2s, border-color .2s, box-shadow .2s}
+  .pcard:hover{transform:translateY(-5px); border-color:#333849; box-shadow:var(--shadow)}
+  .pcard .icon{width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:19px; background:rgba(110,231,183,.12); border:1px solid rgba(110,231,183,.25); margin-bottom:18px}
+  .pcard h3{font-size:17px; margin-bottom:10px}
+  .pcard p{color:var(--text-dim); font-size:14px; flex:1}
+  .pcard .tags{margin-top:16px}
+
+  /* TESTIMONIALS */
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  @media (max-width:900px){ .testi-grid{grid-template-columns:1fr} }
+  .testi-card{background:var(--surface); border:1px dashed var(--border); border-radius:var(--radius); padding:26px; position:relative}
+  .testi-card .quote-mark{font-size:34px; color:var(--accent); opacity:.5; line-height:1; margin-bottom:8px}
+  .testi-card p.placeholder{color:var(--text-faint); font-size:14px; font-style:italic}
+  .testi-who{margin-top:18px; display:flex; align-items:center; gap:12px}
+  .avatar{width:38px;height:38px;border-radius:50%; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text-faint)}
+  .testi-who .name{font-size:13.5px; font-weight:600; color:var(--text-dim)}
+  .testi-who .role{font-size:12px; color:var(--text-faint)}
+
+  /* CONTACT */
+  .contact-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:56px; align-items:start}
+  @media (max-width:820px){ .contact-grid{grid-template-columns:1fr} }
+  .contact-info-list{margin-top:28px; display:flex; flex-direction:column; gap:16px}
+  .contact-row{display:flex; align-items:center; gap:14px; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:12px; transition:border-color .2s, transform .2s}
+  .contact-row:hover{border-color:#333849; transform:translateX(4px)}
+  .contact-row .ico{width:36px;height:36px;border-radius:9px;background:rgba(125,211,252,.12); border:1px solid rgba(125,211,252,.25); display:flex; align-items:center; justify-content:center; font-size:16px}
+  .contact-row .lbl{font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint)}
+  .contact-row .val{font-size:14.5px; font-weight:600}
+  form.contact-form{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:30px}
+  .form-row{margin-bottom:18px}
+  .form-row label{display:block; font-size:12.5px; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:.04em}
+  .form-row input, .form-row textarea{
+    width:100%; background:var(--bg-alt); border:1px solid var(--border); border-radius:9px; padding:12px 14px;
+    color:var(--text); font-size:14.5px; font-family:inherit; resize:vertical;
+  }
+  .form-row input:focus, .form-row textarea:focus{outline:none; border-color:var(--accent)}
+  .form-two{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media (max-width:520px){ .form-two{grid-template-columns:1fr} }
+  .form-submit{width:100%; justify-content:center; border:none; cursor:pointer; font-family:inherit}
+  .form-note{font-size:12px; color:var(--text-faint); margin-top:14px; text-align:center}
+  #form-status{font-size:13.5px; margin-top:12px; text-align:center; min-height:18px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border); padding:38px 0; color:var(--text-faint); font-size:13px}
+  .footer-inner{display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; align-items:center}
+  .footer-links{display:flex; gap:20px}
+  .footer-links a:hover{color:var(--text)}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1; transform:translateY(0)}
+
+  ::selection{background:rgba(110,231,183,.3); color:#fff}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#242733; border-radius:6px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Neeshad<span>.</span>Silva</a>
+    <nav class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Let's talk →</a>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Open to Senior / Lead roles · Remote &amp; Australia</div>
+      <h1 class="hero-title">Building fast, scalable <span class="grad">e-commerce &amp; cloud platforms</span> that ship and don't break.</h1>
+      <p class="hero-sub">Senior Full-Stack Software Engineer with 8+ years across React, Next.js, Node.js, GraphQL and AWS — shipping enterprise VTEX commerce platforms, automation tooling, and headless architectures for global clients.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">View my work</a>
+        <a class="btn btn-ghost" href="Neeshad_Silva_Resume.pdf" download>⬇ Download Resume</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+      <div class="hero-meta">
+        <div>📍 Colombo, Sri Lanka · Open to Relocation &amp; Remote</div>
+        <div>✉️ neeshsilva1@gmail.com</div>
+        <div>📞 +94 77 466 9013</div>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div class="stat"><div class="num">8+</div><div class="label">Years experience</div></div>
+        <div class="stat"><div class="num">10+</div><div class="label">Production projects shipped</div></div>
+        <div class="stat"><div class="num">50+</div><div class="label">Microservices localized (i18n)</div></div>
+        <div class="stat"><div class="num">6</div><div class="label">Enterprise clients delivered</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">About</div>
+        <h2 class="sec-title">Full-stack engineer, cloud-minded, client-facing.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>I'm a <strong>Senior Full-Stack Software Engineer</strong> based in Colombo, Sri Lanka, with 8+ years of experience designing, building and shipping production software — most recently across enterprise <strong>VTEX e-commerce platforms</strong> for global clients including Stanley Engineering (Fastening &amp; Infrastructure), Bisco.com, Cosmo Rentals, Ben's Cycle and GEM.</p>
+          <p>My core stack is <strong>React.js, Next.js, Node.js and GraphQL</strong> on the front end and API layer, backed by <strong>AWS</strong> cloud infrastructure and <strong>Python automation</strong> for everything from CI/CD to catalog operations. I've owned full-stack features end-to-end — from backend architecture and GraphQL API design through UI implementation, testing, performance optimization and release management — while working directly with clients to translate evolving business requirements into shipped software.</p>
+          <p>Recent highlights include architecting a new enterprise checkout with JDE/SAP order simulation, automating a full CI/CD pipeline across company mono-repos with GitHub Actions, scaling multi-language support across 50+ microservices, and building a cloud-rendering microservice to bring 3D product visualization into VTEX storefronts.</p>
+          <p>I hold an <strong>MEng in Electrical &amp; Electronics Engineering</strong> (University of the West of England) and a <strong>BSc in Computer Science, Physical Sciences &amp; Mathematics</strong> (University of Sri Jayewardenepura). I'm now looking for <strong>Senior / Lead Full-Stack or Cloud Engineer</strong> roles with international teams — Australia and remote-global preferred.</p>
+        </div>
+        <div class="about-card reveal">
+          <h4>Quick Facts</h4>
+          <ul class="about-list">
+            <li><span>Location</span><span>Colombo, Sri Lanka</span></li>
+            <li><span>Open to</span><span>Relocation · Remote</span></li>
+            <li><span>Target markets</span><span>Australia · Remote Global</span></li>
+            <li><span>Experience</span><span>8+ years</span></li>
+            <li><span>Core stack</span><span>React · Next.js · Node.js</span></li>
+            <li><span>Cloud</span><span>AWS · Docker</span></li>
+            <li><span>Specialty</span><span>VTEX Commerce · GraphQL</span></li>
+            <li><span>Languages</span><span>English · Sinhala</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" style="background:var(--bg-alt)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">Experience</div>
+        <h2 class="sec-title">Where I've built things.</h2>
+        <p class="sec-desc">A full-stack owner across enterprise commerce platforms, automation tooling and cloud infrastructure.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-head">
+            <div class="tl-role">Software Engineer <span class="co">· Clouda Inc</span></div>
+            <div class="tl-date">Jan 2021 – Jan 2024</div>
+          </div>
+          <div class="tl-loc">Colombo, Sri Lanka · Remote-capable</div>
+          <p class="tl-summary">Functioned as a full-stack owner across 10+ production projects for enterprise VTEX e-commerce clients — architecture, GraphQL API design, frontend implementation, testing and release management. Also drove internal tooling: CI/CD automation, catalog automation with Python, and multi-language platform scaling.</p>
+
+          <div class="proj-block">
+            <h5>Stanley Engineering — Checkout &amp; Infrastructure <small>VTEX · React.js · Node.js · GraphQL</small></h5>
+            <ul>
+              <li>Led full-stack build of a new enterprise checkout — designed backend architecture, documented business rules, and built GraphQL API services for product certification selection, sold-to/ship-to account management, and JDE/SAP order simulation.</li>
+              <li>Built custom React hooks and UI components for the checkout frontend, added mobile responsiveness, and tuned performance using Chrome Lighthouse audits.</li>
+              <li>Established unit, snapshot and integration test coverage across UI and backend components to support reliable production releases.</li>
+              <li>Extended multi-language (i18n) support across 30+ microservices using Python translation scripts executed on AWS.</li>
+            </ul>
+          </div>
+
+          <div class="proj-block">
+            <h5>VTEX Platform Apps — Quick Order &amp; Multi-Wish-List <small>GraphQL · React.js · Node.js</small></h5>
+            <ul>
+              <li>Independently architected and shipped two standalone VTEX applications end-to-end, including GraphQL API design, frontend/backend implementation, mobile responsiveness and release management.</li>
+              <li>Maintained strong Lighthouse performance scores and full test suites (unit, snapshot, integration) for each app.</li>
+            </ul>
+          </div>
+
+          <div class="proj-block">
+            <h5>GEM — Headless E-Commerce Platform <small>Next.js · GraphQL · Headless Architecture</small></h5>
+            <ul>
+              <li>Architected and delivered headless commerce features on Next.js, including multi-wish-list and product comparison, with a custom sliding-panel UI layout.</li>
+              <li>Built backend infrastructure and GraphQL services, gathering requirements directly from stakeholders.</li>
+            </ul>
+          </div>
+
+          <div class="proj-block">
+            <h5>3D Experimental App <small>Three.js · React Fiber · React Drei · Cloud Rendering</small></h5>
+            <ul>
+              <li>Evaluated 3D rendering libraries for VTEX platform compatibility and built a dedicated cloud rendering microservice, integrated into VTEX storefronts via iFrame to work around platform sandbox limitations.</li>
+            </ul>
+          </div>
+
+          <div class="proj-block">
+            <h5>Automation — CI/CD &amp; Catalog Tooling <small>Python · GitHub Actions · AWS · VTEX API</small></h5>
+            <ul>
+              <li>Automated the CI/CD pipeline across company mono-repos with GitHub Actions — custom scripts for version releases, tag creation, automated test runs and workspace provisioning.</li>
+              <li>Built Python automation for VTEX catalog operations: bulk product/SKU creation, image updates from CSV/XLSX, MOQ updates and duplicate-specification cleanup.</li>
+              <li>Scaled multi-language support across 20+ microservices for Bisco.com and 30+ for Stanley Engineering, integrating the Google Translate API.</li>
+            </ul>
+          </div>
+
+          <div class="tags">
+            <span class="tag">React.js</span><span class="tag">Next.js</span><span class="tag">Node.js</span>
+            <span class="tag">GraphQL</span><span class="tag">AWS</span><span class="tag">Python</span>
+            <span class="tag">VTEX</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span>
+          </div>
+          <p class="note">Official employment title per company records: "Software Engineer" (probation Jan–Sep 2021, permanent role Oct 2021 – Jan 2024). Scope of work reflected senior-level ownership.</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-head">
+            <div class="tl-role">Software Engineer <span class="co">· Blimpit</span></div>
+            <div class="tl-date">Mar 2018 – Dec 2019</div>
+          </div>
+          <div class="tl-loc">Colombo, Sri Lanka</div>
+          <p class="tl-summary">Core contributor to Blimpit's omni-channel e-commerce platform — full-stack feature development across backend APIs and frontend UI, plus sole ownership of the AWS deployment.</p>
+          <div class="proj-block">
+            <ul>
+              <li>Built backend APIs (Node.js, Express.js, MongoDB) and frontend UI (React.js) for an omni-channel commerce platform.</li>
+              <li>Owned end-to-end AWS deployment — provisioned EC2 infrastructure, containerized services with Docker, and configured MongoDB as the sole deployment engineer.</li>
+              <li>Standardized dev/staging/production environments via Docker to reduce environment-related defects.</li>
+            </ul>
+          </div>
+          <div class="tags">
+            <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">React.js</span>
+            <span class="tag">MongoDB</span><span class="tag">Docker</span><span class="tag">AWS EC2</span>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-head">
+            <div class="tl-role">Trainee Engineer <span class="co">· Lanka Electronics &amp; FDK Lanka</span></div>
+            <div class="tl-date">2014 – 2017</div>
+          </div>
+          <div class="tl-loc">Colombo, Sri Lanka</div>
+          <p class="tl-summary">Early engineering training in R&amp;D (CNC EDM systems design and process optimization at Lanka Electronics) and precision optical device manufacturing (FDK Lanka) — foundational experience in systems thinking, precision and quality control that carried into software engineering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">Skills</div>
+        <h2 class="sec-title">Technical toolkit.</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <h4>🖥️ Frontend</h4>
+          <div class="chip-row">
+            <span class="chip">React.js</span><span class="chip">Next.js</span><span class="chip">Redux</span>
+            <span class="chip">Custom Hooks</span><span class="chip">Tailwind CSS</span><span class="chip">Responsive UI</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>⚙️ Backend &amp; API</h4>
+          <div class="chip-row">
+            <span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">GraphQL</span>
+            <span class="chip">REST APIs</span><span class="chip">Microservices</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>☁️ Cloud &amp; DevOps</h4>
+          <div class="chip-row">
+            <span class="chip">AWS (EC2, S3, Lambda)</span><span class="chip">Docker</span>
+            <span class="chip">GitHub Actions</span><span class="chip">CI/CD</span><span class="chip">Mono Repos</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>🗄️ Data</h4>
+          <div class="chip-row">
+            <span class="chip">MongoDB</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Redis (basic)</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>🧪 Testing &amp; Quality</h4>
+          <div class="chip-row">
+            <span class="chip">Unit Testing</span><span class="chip">Integration Testing</span>
+            <span class="chip">Snapshot Testing</span><span class="chip">Chrome Lighthouse</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>🤖 Automation &amp; Platforms</h4>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">VTEX Platform</span><span class="chip">Three.js</span>
+            <span class="chip">React Fiber</span><span class="chip">Google Translate API</span><span class="chip">JDE / SAP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" style="background:var(--bg-alt)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">Selected Work</div>
+        <h2 class="sec-title">Projects &amp; case studies.</h2>
+        <p class="sec-desc">Client work delivered at Clouda Inc. Codebases are proprietary; details reflect scope, architecture and my role.</p>
+      </div>
+      <div class="projects-grid">
+        <div class="pcard reveal">
+          <div class="icon">🛒</div>
+          <h3>Stanley Engineering — Enterprise Checkout</h3>
+          <p>Full-stack rebuild of a VTEX checkout with GraphQL services for certification selection, account management, and JDE/SAP order simulation. Backend architecture through mobile-responsive UI.</p>
+          <div class="tags"><span class="tag">VTEX</span><span class="tag">GraphQL</span><span class="tag">React</span></div>
+        </div>
+        <div class="pcard reveal">
+          <div class="icon">⚡</div>
+          <h3>Quick Order &amp; Multi-Wish-List Apps</h3>
+          <p>Two standalone VTEX applications architected and shipped independently — from GraphQL API design to release management, with full test coverage.</p>
+          <div class="tags"><span class="tag">VTEX</span><span class="tag">Node.js</span><span class="tag">GraphQL</span></div>
+        </div>
+        <div class="pcard reveal">
+          <div class="icon">🧩</div>
+          <h3>GEM — Headless Commerce</h3>
+          <p>Headless e-commerce build on Next.js with a custom sliding-panel UI for multi-wish-list and product comparison, backed by a GraphQL data layer.</p>
+          <div class="tags"><span class="tag">Next.js</span><span class="tag">GraphQL</span><span class="tag">Headless</span></div>
+        </div>
+        <div class="pcard reveal">
+          <div class="icon">🧊</div>
+          <h3>3D Product Rendering Service</h3>
+          <p>Cloud rendering microservice bringing Three.js / React Fiber 3D visualization into VTEX storefronts via iFrame — working around platform sandbox limits.</p>
+          <div class="tags"><span class="tag">Three.js</span><span class="tag">React Fiber</span><span class="tag">Cloud</span></div>
+        </div>
+        <div class="pcard reveal">
+          <div class="icon">🔁</div>
+          <h3>CI/CD Pipeline Automation</h3>
+          <p>End-to-end GitHub Actions automation for company mono-repos — versioning, tagging, automated test runs and workspace provisioning.</p>
+          <div class="tags"><span class="tag">GitHub Actions</span><span class="tag">Python</span><span class="tag">DevOps</span></div>
+        </div>
+        <div class="pcard reveal">
+          <div class="icon">🌐</div>
+          <h3>Multi-Language Platform Scaling</h3>
+          <p>Extended i18n support across 50+ microservices (Stanley + Bisco.com) using Google Translate API and Python translation pipelines run on AWS.</p>
+          <div class="tags"><span class="tag">AWS</span><span class="tag">Python</span><span class="tag">i18n</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">Testimonials</div>
+        <h2 class="sec-title">What colleagues &amp; clients say.</h2>
+        <p class="sec-desc">Space reserved for recommendations — request a quote from a manager, teammate or client and drop it in here.</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="quote-mark">"</div>
+          <p class="placeholder">[Add a short quote from your Clouda Inc manager or team lead about your technical ownership and delivery.]</p>
+          <div class="testi-who"><div class="avatar">?</div><div><div class="name">Name, Title</div><div class="role">Clouda Inc</div></div></div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="quote-mark">"</div>
+          <p class="placeholder">[Add a quote from a client stakeholder (e.g. Stanley Engineering) about working with you directly.]</p>
+          <div class="testi-who"><div class="avatar">?</div><div><div class="name">Name, Title</div><div class="role">Client</div></div></div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="quote-mark">"</div>
+          <p class="placeholder">[Add a peer recommendation about collaboration, code quality, or mentorship.]</p>
+          <div class="testi-who"><div class="avatar">?</div><div><div class="name">Name, Title</div><div class="role">Teammate</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="background:var(--bg-alt)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker">Contact</div>
+        <h2 class="sec-title">Let's build something together.</h2>
+        <p class="sec-desc">Open to Senior / Lead Full-Stack and Cloud Engineer roles — Australia, remote-global, or on-site relocation.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="contact-info-list">
+            <a class="contact-row" href="mailto:neeshsilva1@gmail.com">
+              <div class="ico">✉️</div>
+              <div><div class="lbl">Email</div><div class="val">neeshsilva1@gmail.com</div></div>
+            </a>
+            <a class="contact-row" href="tel:+94774669013">
+              <div class="ico">📞</div>
+              <div><div class="lbl">Phone</div><div class="val">+94 77 466 9013</div></div>
+            </a>
+            <div class="contact-row">
+              <div class="ico">📍</div>
+              <div><div class="lbl">Location</div><div class="val">Colombo, Sri Lanka</div></div>
+            </div>
+            <a class="contact-row" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+              <div class="ico">🔗</div>
+              <div><div class="lbl">LinkedIn</div><div class="val">Add your profile URL</div></div>
+            </a>
+            <a class="contact-row" href="https://github.com/" target="_blank" rel="noopener">
+              <div class="ico">💻</div>
+              <div><div class="lbl">GitHub</div><div class="val">Add your GitHub URL</div></div>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-two">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@company.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="Role / opportunity you're reaching out about" />
+          </div>
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me a bit about the role or project..." required></textarea>
+          </div>
+          <button class="btn btn-primary form-submit" type="submit">Send message</button>
+          <div id="form-status"></div>
+          <p class="form-note">Powered by Formspree — replace YOUR_FORM_ID with your own form endpoint (formspree.io) to activate. Until then, the mailto link above works immediately.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>© <span id="year"></span> Neeshad Silva. Built with intent.</div>
+    <div class="footer-links">
+      <a href="mailto:neeshsilva1@gmail.com">Email</a>
+      <a href="Neeshad_Silva_Resume.pdf" download>Resume</a>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const links = document.querySelector('.navlinks');
+  toggle?.addEventListener('click', () => {
+    const isOpen = links.style.display === 'flex';
+    links.style.display = isOpen ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '58px';
+    links.style.right = '24px';
+    links.style.background = 'var(--surface)';
+    links.style.border = '1px solid var(--border)';
+    links.style.borderRadius = '12px';
+    links.style.padding = '16px 22px';
+    links.style.gap = '14px';
+  });
+  document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', () => {
+    if (window.innerWidth <= 760) links.style.display = 'none';
+  }));
+
+  // scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // contact form (Formspree AJAX submit)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const action = form.getAttribute('action') || '';
+    if (action.includes('YOUR_FORM_ID')) {
+      status.textContent = 'Form endpoint not configured yet — using email fallback instead.';
+      status.style.color = 'var(--accent-warm)';
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value || 'Portfolio contact';
+      const message = document.getElementById('message').value;
+      window.location.href = `mailto:neeshsilva1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      return;
+    }
+    status.textContent = 'Sending…';
+    status.style.color = 'var(--text-dim)';
+    try {
+      const res = await fetch(action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = 'Thanks! Your message has been sent.';
+        status.style.color = 'var(--accent)';
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong — please email me directly instead.';
+        status.style.color = '#f87171';
+      }
+    } catch (err) {
+      status.textContent = 'Network error — please email me directly instead.';
+      status.style.color = '#f87171';
+    }
+  });
+</script>
+
+</body>
+</html>
