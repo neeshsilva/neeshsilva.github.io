@@ -103,20 +103,17 @@
     </div>
   </div>
 
-  <!-- Cloudflare Web Analytics -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CLOUDFLARE_TOKEN"}'></script>
-  <!-- End Cloudflare Web Analytics -->
+  <script src="/tracker.js"></script>
 
   <script>
     // Tracked share links look like /r/<slug> (for example /r/acme-recruiter).
     // GitHub Pages serves this file for them, Cloudflare records the visit under
     // that path, and we then hand the visitor off to the real site.
     //
-    // The beacon reports over XMLHttpRequest, which is cancelled if the page
-    // navigates away mid-flight, so we hold here long enough for it to land.
-    // Measured locally at ~900ms from page load to the request going out.
-    var HANDOFF_DELAY_MS = 1800;
+    // tracker.js loads synchronously above and hands the hit to sendBeacon,
+    // which the browser keeps queued across the navigation below — so this
+    // delay is only a small safety margin, not a wait for the network.
+    var HANDOFF_DELAY_MS = 300;
 
     (function () {
       var isTrackedLink = /^\/r\//.test(location.pathname);
