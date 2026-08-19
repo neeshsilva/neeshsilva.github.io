@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neeshad Silva</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    :root {
+      --bg: #0a0b0f;
+      --surface: #14161d;
+      --border: #242733;
+      --text: #eef0f4;
+      --text-dim: #9aa0ae;
+      --accent: #6ee7b7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .card {
+      max-width: 420px
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -.01em;
+      margin-bottom: 10px
+    }
+
+    p {
+      color: var(--text-dim);
+      font-size: .95rem;
+      line-height: 1.6
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent
+    }
+
+    a:hover {
+      border-bottom-color: var(--accent)
+    }
+
+    .spinner {
+      width: 26px;
+      height: 26px;
+      margin: 0 auto 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .spinner {
+        animation: none
+      }
+    }
+
+    [hidden] {
+      display: none !important
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div id="redirecting">
+      <div class="spinner"></div>
+      <h1>One moment</h1>
+      <p>Taking you to Neeshad Silva's portfolio&hellip;</p>
+    </div>
+
+    <div id="notfound" hidden>
+      <h1>Page not found</h1>
+      <p>That link doesn't lead anywhere. <a href="/">Head to the homepage</a> instead.</p>
+    </div>
+  </div>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CLOUDFLARE_TOKEN"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <script>
+    // Tracked share links look like /r/<slug> (for example /r/acme-recruiter).
+    // GitHub Pages serves this file for them, Cloudflare records the visit under
+    // that path, and we then hand the visitor off to the real site.
+    //
+    // The beacon reports over XMLHttpRequest, which is cancelled if the page
+    // navigates away mid-flight, so we hold here long enough for it to land.
+    // Measured locally at ~900ms from page load to the request going out.
+    var HANDOFF_DELAY_MS = 1800;
+
+    (function () {
+      var isTrackedLink = /^\/r\//.test(location.pathname);
+
+      if (!isTrackedLink) {
+        document.getElementById('redirecting').hidden = true;
+        document.getElementById('notfound').hidden = false;
+        return;
+      }
+
+      setTimeout(function () {
+        location.replace('/');
+      }, HANDOFF_DELAY_MS);
+    })();
+  </script>
+</body>
+
+</html>
