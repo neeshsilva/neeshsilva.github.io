@@ -9,7 +9,7 @@
   'use strict';
 
   // The Worker's URL. Printed by `wrangler deploy`.
-  var ENDPOINT = 'https://REPLACE_WITH_YOUR_WORKER_SUBDOMAIN.workers.dev/collect';
+  var ENDPOINT = 'https://neeshad-analytics.neesh.workers.dev/collect';
 
   if (ENDPOINT.indexOf('REPLACE_WITH_') !== -1) return;
 
